@@ -1,5 +1,5 @@
 package f2.spw;
-
+import java.awt.Body;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -31,7 +31,10 @@ public class GamePanel extends JPanel {
 		
 		repaint();
 	}
-
+	public void Gamepacth(){
+		New.Gamepacth(1);
+		
+	}
 	@Override
 	public void paint(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
