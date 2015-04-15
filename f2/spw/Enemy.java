@@ -12,8 +12,7 @@ public class Enemy extends Sprite{
 	private boolean alive = true;
 	
 	public Enemy(int x, int y) {
-		super(x, y, 5, 10);
-		
+		super(x, y, 5 , 10);
 	}
 
 	@Override
@@ -26,7 +25,6 @@ public class Enemy extends Sprite{
 		}
 		g.setColor(Color.RED);
 		g.fillRect(x, y, width, height);
-		
 	}
 
 	public void proceed(){
