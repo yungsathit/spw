@@ -15,6 +15,7 @@ public class GameEngine implements KeyListener, GameReporter{
 	GamePanel gp;
 		
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();	
+	private ArrayList<Item> item = new ArrayList<Item>();	
 	private SpaceShip v;	
 	
 	private Timer timer;
@@ -33,6 +34,7 @@ public class GameEngine implements KeyListener, GameReporter{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				process();
+				process2();
 			}
 		});
 		timer.setRepeats(true);
@@ -48,6 +50,11 @@ public class GameEngine implements KeyListener, GameReporter{
 		gp.sprites.add(e);
 		enemies.add(e);
 	}
+	private void generateItem(){
+		Item i = new Item((int)(Math.random()*390), 1);
+		gp.sprites.add(i);
+		item.add(i);
+	}
 	
 	private void process(){
 		if(Math.random() < difficulty){
@@ -62,7 +69,7 @@ public class GameEngine implements KeyListener, GameReporter{
 			if(!e.isAlive()){
 				e_iter.remove();
 				gp.sprites.remove(e);
-				score += 10000;
+				score += 10;
 			}
 		}
 		
@@ -79,10 +86,42 @@ public class GameEngine implements KeyListener, GameReporter{
 		}
 	}
 	
+	private void process2(){
+		if(Math.random() < difficulty){
+			generateItem();
+		}
+		
+		Iterator<Item> e_iter = item.iterator();
+		while(e_iter.hasNext()){
+			Item i = e_iter.next();
+			i.proceed();
+			
+			if(!i.isUndie()){
+				e_iter.remove();
+				gp.sprites.remove(i);
+				score += 10000;
+			}
+		}
+		
+		gp.updateGameUI(this);
+		
+		Rectangle2D.Double vr = v.getRectangle();
+		Rectangle2D.Double er;
+		for(Item i : item){
+			er = i.getRectangle();
+			if(er.intersects(vr)){
+				undie();
+				return;
+			}
+		}
+	}
 	public void die(){
-		timer.start();
+		timer.stop();
 	}
 	
+	public void undie(){
+		timer.start();
+	}
 	void controlVehicle(KeyEvent e) {
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_LEFT:

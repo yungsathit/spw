@@ -7,13 +7,13 @@ public class Item extends Sprite{
 	public static final int Y_TO_INIT = 400;
 	public static final int Y_TO_KEEP = 600;
 	
-	private int step = 11;
+	private int step = 18;
 	private boolean undie = true;
 
 
 
 	public Item(int x, int y) {
-		super(x, y, 10, 12);
+		super(x, y, 20, 20);
 	}
 	@Override
 	public void draw(Graphics2D g) {
@@ -24,7 +24,7 @@ public class Item extends Sprite{
 			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 
 					(float)(Y_TO_KEEP - y)/(Y_TO_KEEP - Y_TO_INIT)));
 		}
-		g.setColor(Color.BLUE);
+		g.setColor(Color.RED);
 		g.fillRect(x+1, y, width, height);
 	}
 	public void proceed(){
