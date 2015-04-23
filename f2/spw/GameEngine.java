@@ -18,10 +18,13 @@ public class GameEngine implements KeyListener, GameReporter{
 	private ArrayList<Item> item = new ArrayList<Item>();	
 	private SpaceShip v;	
 	
+	public int Hp = 4;
+
 	private Timer timer;
 	
 	private long score = 0;
 	private double difficulty = 0.1;
+	private double difficulty2 = 0.01;
 	
 	public GameEngine(GamePanel gp, SpaceShip v) {
 		this.gp = gp;
@@ -51,7 +54,7 @@ public class GameEngine implements KeyListener, GameReporter{
 		enemies.add(e);
 	}
 	private void generateItem(){
-		Item i = new Item((int)(Math.random()*390), 1);
+		Item i = new Item((int)(Math.random()*390), 30);
 		gp.sprites.add(i);
 		item.add(i);
 	}
@@ -80,14 +83,16 @@ public class GameEngine implements KeyListener, GameReporter{
 		for(Enemy e : enemies){
 			er = e.getRectangle();
 			if(er.intersects(vr)){
-				die();
+				Hp--;
+				if(Hp < 0)
+					die();
 				return;
 			}
 		}
 	}
 	
 	private void process2(){
-		if(Math.random() < difficulty){
+		if(Math.random() < difficulty2){
 			generateItem();
 		}
 		
