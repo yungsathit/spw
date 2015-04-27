@@ -11,14 +11,14 @@ import java.util.Iterator;
 import javax.swing.Timer;
 
 
-public class GameEngine implements KeyListener, GameReporter{
-	GamePanel gp;
+public class GameEngine implements KeyListener, GameReporter, GameReporter2{
+	GamePanel gp,gg;
 		
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();	
 	private ArrayList<Item> item = new ArrayList<Item>();	
 	private SpaceShip v;	
 	
-	public int Hp = 4;
+	private int hp = 4;
 
 	private Timer timer;
 	
@@ -77,14 +77,16 @@ public class GameEngine implements KeyListener, GameReporter{
 		}
 		
 		gp.updateGameUI(this);
-		
+		//gp.updateHp(this);
 		Rectangle2D.Double vr = v.getRectangle();
 		Rectangle2D.Double er;
 		for(Enemy e : enemies){
 			er = e.getRectangle();
 			if(er.intersects(vr)){
-				Hp--;
-				if(Hp < 0)
+				
+				getHp();
+				
+				if(hp < 0)
 					die();
 				return;
 			}
@@ -115,6 +117,7 @@ public class GameEngine implements KeyListener, GameReporter{
 		for(Item i : item){
 			er = i.getRectangle();
 			if(er.intersects(vr)){
+				gp.updateGameUI(this);
 				undie();
 				return;
 			}
@@ -149,6 +152,10 @@ public class GameEngine implements KeyListener, GameReporter{
 
 	public long getScore(){
 		return score;
+	}
+
+	public int getHp(){
+		return hp--;
 	}
 	
 	@Override

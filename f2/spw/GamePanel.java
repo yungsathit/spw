@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 public class GamePanel extends JPanel {
 	
 	private BufferedImage bi;	
-	Graphics2D big;
+	Graphics2D big,big2;
 	ArrayList<Sprite> sprites = new ArrayList<Sprite>();
 
 	public GamePanel() {
@@ -22,11 +22,16 @@ public class GamePanel extends JPanel {
 
 	public void updateGameUI(GameReporter reporter){
 		big.clearRect(0, 0, 400, 600);
+		//big2.clearRect(0, 0, 400, 600);
+
 		
 		big.setColor(Color.WHITE);		
+		//big2.setColor(Color.RED);
 		big.drawString(String.format("%08d", reporter.getScore()), 300, 20);
+		//big2.drawString(String.format("%02d", reporter.getHp()), 300, 60);
 		for(Sprite s : sprites){
 			s.draw(big);
+		//	s.draw(big2);
 		}
 		
 		repaint();
